@@ -1,5 +1,4 @@
 import logging
-
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -14,6 +13,9 @@ logging.basicConfig(
 def parse():
     if request.method == "POST":
         data = request.get_json()
+
+        with open("test.json", 'w') as file:
+            file.write(data)
     return ""
 
 
