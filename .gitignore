@@ -1,3 +1,5 @@
 api-token.json
 token.json
 .idea
+.env
+.venv

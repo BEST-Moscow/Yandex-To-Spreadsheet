@@ -1,5 +1,6 @@
 import logging
-from flask import Flask, request
+import json
+from flask import Flask, request, abort
 
 app = Flask(__name__)
 
@@ -12,12 +13,16 @@ logging.basicConfig(
 @app.route("/", methods=["POST"])
 def parse():
     if request.method == "POST":
-        data = request.get_json()
+        json_data = request.get_json()
+        data = json.dumps(json_data, ensure_ascii=False)
 
+        logging.info("Data fetched")
         with open("test.json", 'w') as file:
             file.write(data)
-    return ""
+        return ""
+    abort(500)
 
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
+
