@@ -16,7 +16,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The range of cells to update in sheet notation
 counter = 2
-RANGE_NAME = f"{os.getenv('SHEET_NAME_OF_LIST')}!A{counter}:E{counter}"
+RANGE_NAME = f"{os.getenv('SHEET_LIST_NAME')}!A{counter}:E{counter}"
 
 
 def authenticate() -> None:
