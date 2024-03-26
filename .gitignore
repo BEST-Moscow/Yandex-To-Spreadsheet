@@ -1,5 +1,11 @@
 tokens/api-token.json
 tokens/token.json
-.idea
+
 .env
-.venv
+
+.idea
+venv
+env
+
+scripts/__pycache__
+__pycache__

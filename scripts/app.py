@@ -1,6 +1,6 @@
 import logging
 import json
-from api_append import authenticate, export_data_to_sheets
+from . import append
 from flask import Flask, request, abort
 
 app = Flask(__name__)
@@ -22,9 +22,9 @@ def parse():
             file.write(data)
 
         # Authenticate to the service and update the sheet
-        service = authenticate()
+        service = append.authenticate()
         if service:  # Only attempt to update the sheet if authentication was successful
-            export_data_to_sheets(service, json_data)
+            append.export_data_to_sheets(service, json_data)
         return ""
     abort(500)
 
