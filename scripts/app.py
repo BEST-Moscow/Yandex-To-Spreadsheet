@@ -24,7 +24,7 @@ def parse():
         # Authenticate to the service and update the sheet
         service = authenticate()
         if service:  # Only attempt to update the sheet if authentication was successful
-            export_data_to_sheets(service)
+            export_data_to_sheets(service, json_data)
         return ""
     abort(500)
 
