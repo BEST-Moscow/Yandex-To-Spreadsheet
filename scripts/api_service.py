@@ -3,6 +3,9 @@ import json
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_google_service(client_secret_file, api_service_name, api_version, output_path, scopes):
@@ -19,7 +22,7 @@ def create_google_service(client_secret_file, api_service_name, api_version, out
 
     # Check if the output JSON file with credentials exists
     if os.path.exists(output_path):
-        with open(output_path, 'rb') as token:
+        with open(output_path, "rb") as token:
             cred = json.load(token)
 
     # If there are no (valid) credentials available, let the user log in
@@ -32,7 +35,7 @@ def create_google_service(client_secret_file, api_service_name, api_version, out
             cred = flow.run_local_server(port=0)
 
             # Save the credentials for the next run
-            with open(output_path, 'w') as token:
+            with open(output_path, "w") as token:
                 token.write(cred.to_json())
 
     try:
@@ -47,9 +50,9 @@ def create_google_service(client_secret_file, api_service_name, api_version, out
 
 if __name__ == "__main__":
     create_google_service(
-        client_secret_file='token.json',  # your input filename
-        api_service_name='sheets',
-        api_version='v4',
-        output_path='api-token.json',  # your output filename
-        scopes=['https://www.googleapis.com/auth/spreadsheets']
+        client_secret_file=os.getenv("TOKEN_PATH"),  # your input filename
+        api_service_name="sheets",
+        api_version="v4",
+        output_path=os.getenv("CLIENT_SECRET_FILE"),  # your output filename
+        scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )

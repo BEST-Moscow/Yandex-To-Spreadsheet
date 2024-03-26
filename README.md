@@ -1,11 +1,15 @@
-You should have "token.json" from Google API OAuth 2.0
-(you can create and download it in Google API credentials)
+You must have `token.json` from Google API OAuth 2.0
 
-Then run "api-service-gen.py", it will create "api-token.json",
-that will use for Google API 
+_(you can create and download it using Google API credentials)_
 
-API:
-URL: http://5.35.114.190:5000/
-Method: POST
-Body: Yandex-Form-Api
-Head: Content-Type: application/json
+
+Then run `api-service-gen.py`, it will create `api-token.json`,
+which will be used for Google API 
+
+## **API**:
+
+**URL**: Your URL
+
+**Method**: POST
+
+**Head**: Content-Type: application/json
