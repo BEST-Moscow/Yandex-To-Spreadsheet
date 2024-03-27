@@ -2,8 +2,6 @@ tokens/api-token.json
 tokens/token.json
 data.json
 
-.env
-
 .idea
 venv
 env
