@@ -1,5 +1,6 @@
 tokens/api-token.json
 tokens/token.json
+data.json
 
 .env
 
@@ -7,5 +8,4 @@ tokens/token.json
 venv
 env
 
-scripts/__pycache__
 __pycache__

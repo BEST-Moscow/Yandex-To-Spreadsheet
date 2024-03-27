@@ -15,8 +15,8 @@ logging.basicConfig(level=logging.INFO)
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The range of cells to update in sheet notation
-counter = 2
-RANGE_NAME = f"{os.getenv('SHEET_LIST_NAME')}!A{counter}:E{counter}"
+with open(f"{os.getcwd()}/scripts/googleApi/id.txt", "r") as file:        
+    counter = int(file.read())
 
 
 def authenticate() -> None:
@@ -26,7 +26,8 @@ def authenticate() -> None:
     try:
         # Load credentials from the service account file and create a Sheets API service
         credentials = Credentials.from_authorized_user_file(
-            os.getenv('TOKEN_PATH'), SCOPES)
+            f"{os.getcwd()}/{os.getenv('TOKEN_PATH')}", SCOPES)
+        
         service = build("sheets", "v4", credentials=credentials)
         return service
     except Exception as e:
@@ -48,8 +49,10 @@ def export_data_to_sheets(service, json_data):
 
     :param service: A Sheets API service instance.
     """
-
-    data = str(json_to_sheets_data(json_data))
+    global counter
+    RANGE_NAME = f"{os.getenv('SHEET_LIST_NAME')}!A{counter}:M{counter}"
+    
+    data = json_to_sheets_data(json_data)
 
     # Update the range of cells with the given values
     response = service.spreadsheets().values().update(
@@ -63,3 +66,8 @@ def export_data_to_sheets(service, json_data):
     ).execute()
     logging.info(response)
     logging.info("Sheet successfully Updated!")
+    
+    counter += 1
+    
+    with open(f"{os.getcwd()}/scripts/googleApi/id.txt", "w") as file:
+        file.write(str(counter))

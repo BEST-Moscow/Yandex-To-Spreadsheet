@@ -1,6 +1,7 @@
 import logging
 import json
-from . import append
+import os
+from .googleApi import append
 from flask import Flask, request, abort
 
 app = Flask(__name__)
@@ -18,8 +19,8 @@ def parse():
         data = json.dumps(json_data, ensure_ascii=False)
 
         logging.info("Data fetched")
-        with open("test.json", 'w') as file:
-            file.write(data)
+        with open(f"{os.getcwd()}/data.json", 'a') as file:
+            file.write(data + ",\n")
 
         # Authenticate to the service and update the sheet
         service = append.authenticate()

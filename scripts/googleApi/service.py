@@ -50,7 +50,7 @@ def create_google_service(client_secret_file, api_service_name, api_version, out
 
 if __name__ == "__main__":
     create_google_service(
-        client_secret_file=os.getenv("TOKEN_PATH"),  # your input filename
+        client_secret_file=f"{os.getcwd()}/{os.getenv('TOKEN_PATH')}",  # your input filename
         api_service_name="sheets",
         api_version="v4",
         output_path=os.getenv("CLIENT_SECRET_FILE"),  # your output filename
