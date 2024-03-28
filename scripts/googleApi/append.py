@@ -1,4 +1,3 @@
-# Import required modules
 import os
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
@@ -14,8 +13,9 @@ logging.basicConfig(level=logging.INFO)
 # Auth scope for Sheets API
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-# The range of cells to update in sheet notation
-with open(f"{os.getcwd()}/scripts/googleApi/id.txt", "r") as file:        
+# ID of the line, where the data will be placed
+# Save to file to save last id of the line after shutdown
+with open(f"{os.getcwd()}/scripts/googleApi/id.txt", "r") as file:
     counter = int(file.read())
 
 
@@ -26,8 +26,8 @@ def authenticate() -> None:
     try:
         # Load credentials from the service account file and create a Sheets API service
         credentials = Credentials.from_authorized_user_file(
-            f"{os.getcwd()}/{os.getenv('TOKEN_PATH')}", SCOPES)
-        
+            f"{os.getcwd()}/tokens/api-token.json", SCOPES)
+
         service = build("sheets", "v4", credentials=credentials)
         return service
     except Exception as e:
@@ -36,6 +36,13 @@ def authenticate() -> None:
 
 
 def json_to_sheets_data(data):
+    """
+    Change the json data to the format that Google Api uses
+
+    :param data: Received data from API in json format
+    :return: Data in current format to use for spreadsheet
+    """
+
     sheet_data = list()
     for tag in data:
         sheet_data.append(str(data[tag]))
@@ -45,13 +52,16 @@ def json_to_sheets_data(data):
 
 def export_data_to_sheets(service, json_data):
     """
-    Updates specific cells in the spreadsheet with new data.
+    Updates specific cells in the spreadsheet with new data
 
-    :param service: A Sheets API service instance.
+    :param service: A Sheets API service instance
+    :param json_data: Received data from API in json format
     """
     global counter
-    RANGE_NAME = f"{os.getenv('SHEET_LIST_NAME')}!A{counter}:M{counter}"
-    
+
+    # Range and sheet on which the data will be placed
+    RANGE_NAME = f"{os.getenv('SHEET_LIST_NAME')}!{os.getenv('FIRST_LETTER_OF_COL')}{counter}:{os.getenv('LAST_LETTER_OF_COL')}{counter}"
+
     data = json_to_sheets_data(json_data)
 
     # Update the range of cells with the given values
@@ -66,8 +76,9 @@ def export_data_to_sheets(service, json_data):
     ).execute()
     logging.info(response)
     logging.info("Sheet successfully Updated!")
-    
+
     counter += 1
-    
+
+    # Update the id of the line where next data will be inserted
     with open(f"{os.getcwd()}/scripts/googleApi/id.txt", "w") as file:
         file.write(str(counter))

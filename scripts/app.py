@@ -19,6 +19,8 @@ def parse():
         data = json.dumps(json_data, ensure_ascii=False)
 
         logging.info("Data fetched")
+
+        # Caching data in the data.json file
         with open(f"{os.getcwd()}/data.json", 'a') as file:
             file.write(data + ",\n")
 
@@ -26,8 +28,6 @@ def parse():
         service = append.authenticate()
         if service:  # Only attempt to update the sheet if authentication was successful
             append.export_data_to_sheets(service, json_data)
-        return ""
-    abort(500)
 
 
 if __name__ == "__main__":

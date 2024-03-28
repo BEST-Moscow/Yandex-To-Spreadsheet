@@ -5,18 +5,21 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from dotenv import load_dotenv
 
+# Load .env variables
 load_dotenv()
 
 
 def create_google_service(client_secret_file, api_service_name, api_version, output_path, scopes):
-    """Creates a Google API service.
+    """
+    Creates a Google API service
 
-    :param client_secret_file: Path to the client secret JSON file from Google Cloud Console.
-    :param api_service_name: The name of the Google API service.
-    :param api_version: The version of the Google API service.
-    :param output_path: Path to the output JSON file storing the credentials.
-    :param scopes: A list of scopes for the API service.
-    :return: A service that is connected to the specified Google API.
+    :param client_secret_file: Path to the client secret JSON file from Google Cloud Console
+    :param api_service_name: The name of the Google API service
+    :param api_version: The version of the Google API service
+    :param output_path: Path to the output JSON file storing the credentials
+    :param scopes: A list of scopes for the API service
+
+    :return: A service that is connected to the specified Google API
     """
     cred = None
 
@@ -50,9 +53,9 @@ def create_google_service(client_secret_file, api_service_name, api_version, out
 
 if __name__ == "__main__":
     create_google_service(
-        client_secret_file=f"{os.getcwd()}/{os.getenv('TOKEN_PATH')}",  # your input filename
+        client_secret_file=f"{os.getcwd()}/tokens/token.json",  # your input filename
         api_service_name="sheets",
         api_version="v4",
-        output_path=os.getenv("CLIENT_SECRET_FILE"),  # your output filename
+        output_path=f"{os.getcwd()}/tokens/api-token.json",  # your output filename
         scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )

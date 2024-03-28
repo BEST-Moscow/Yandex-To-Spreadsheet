@@ -49,7 +49,7 @@ Your can create and download this token at https://console.cloud.google.com/
 
 On the credentials page, create an **OAuth** token for the `Desktop version`, and then download it
 
-Then rename this file to `token.json` and put it in the `tokens` directory
+Then rename this file to `token.json` and put it in the `tokens` directory (_don't forget to remove the_ `test-token.json`)
 
 ---
 ### The name of the List in your Sheet
@@ -80,13 +80,13 @@ git clone <url_of_this_repository>
 3. Write your variables in `.env`, like in an example below
 
 ```.dotenv
-SPREADSHEET_ID=<your ID>
+SPREADSHEET_ID=<ID_OF_YOUR_SHEET>
+
+LAST_LETTER_OF_COL=M
+
+FIRST_LETTER_OF_COL=A
 
 SHEET_LIST_NAME=Sheet1
-
-CLIENT_SECRET_FILE=/tokens/token.json
-
-TOKEN_PATH=/tokens/api-token.json
 ```
 
 4. Please update your `package-manager` and install all requirements from `requirements.txt`
