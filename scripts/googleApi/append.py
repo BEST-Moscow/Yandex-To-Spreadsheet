@@ -45,7 +45,10 @@ def json_to_sheets_data(data):
 
     sheet_data = list()
     for tag in data:
-        sheet_data.append(str(data[tag]))
+        if data[tag] != "":
+            sheet_data.append(str(data[tag]))
+        else:
+            sheet_data.append("-")
 
     return sheet_data
 
