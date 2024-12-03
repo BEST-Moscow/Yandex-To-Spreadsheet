@@ -1,20 +1,16 @@
-FROM python
+FROM python:3.11
 
-WORKDIR /scripts
-# WORKDIR /
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONPATH="/venv/lib/python3.11/site-packages:${PYTHONPATH}"
 
-# ENV FLASK_APP=app.py
-# ENV FLASK_RUN_HOST=0.0.0.0
-
+ADD ./scripts/googleApi/tokens/api-token.json ./scripts/googleApi/tokens/
+    
 COPY requirements.txt ./
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
-# RUN source venv/bin/activate
 
 COPY . .
 
-# CMD [ "source",   "venv/bin/activate" ]
-CMD [ "flask", "run" ]
 # CMD [ "gunicorn", "-b", "0.0.0.0:5000", "wsgi:app" ]
-# CMD [ "source", "venv/bin/activate", "&&", "gunicorn", "-b", "0.0.0.0:5000", "wsgi:app" ]
 
-# EXPOSE 3000
+EXPOSE 5000

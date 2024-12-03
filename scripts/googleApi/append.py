@@ -2,9 +2,9 @@ import os
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
 import logging
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv('.env'))
 
 # Configuring the logging module to output debug information
 logging.basicConfig(level=logging.INFO)
@@ -27,6 +27,8 @@ def authenticate() -> None:
         # Load credentials from the service account file and create a Sheets API service
         credentials = Credentials.from_authorized_user_file(
             f"{os.getcwd()}/tokens/api-token.json", SCOPES)
+            # f"{os.getcwd()}/tokens/api-token.json", SCOPES)
+            # f"./scripts/googleApi/tokens/api-token.json", SCOPES)
 
         service = build("sheets", "v4", credentials=credentials)
         return service
@@ -83,5 +85,5 @@ def export_data_to_sheets(service, json_data):
     counter += 1
 
     # Update the id of the line where next data will be inserted
-    with open(f"{os.getcwd()}/scripts/googleApi/id.txt", "w") as file:
+    with open(f"{os.getcwd()}/id.txt", "w") as file:
         file.write(str(counter))

@@ -1,5 +1,7 @@
-tokens/api-token.json
-tokens/token.json
+/scripts/googleApi/tokens/api-token.json
+/scripts/googleApi/tokens/token.json
+
+/__pycache__
 
 data.json
 
