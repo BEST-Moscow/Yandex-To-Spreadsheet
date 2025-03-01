@@ -7,6 +7,7 @@ data.json
 
 .idea
 venv
+.env
 env
 
 __pycache__

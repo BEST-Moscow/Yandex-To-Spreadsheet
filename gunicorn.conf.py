@@ -1,0 +1,9 @@
+bind = "0.0.0.0:5000"  # Адрес и порт для сервера
+workers = 4  # Количество воркеров (можно настроить под нагрузку)
+threads = 2  # Количество потоков на воркер
+accesslog = "gunicornLogs.log"  # Лог запросов
+errorlog = "gunicornLogs.log"  # Лог ошибок
+loglevel = "info"  # Уровень логирования (debug, info, warning, error, critical)
+capture_output = True  # Перенаправление вывода stdout/stderr в лог
+daemon = True  # Запуск в фоне
+reload = True # Автоматический перезапуск при изменении кода
